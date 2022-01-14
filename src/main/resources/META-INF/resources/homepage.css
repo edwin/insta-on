@@ -1,0 +1,64 @@
+body {
+    background: url('https://picsum.photos/1920/1080');
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.transparent-bar {
+    background: rgba( 0, 0, 0, .2 );
+}
+
+.height {
+    height: 30vh
+}
+
+.form {
+    position: relative
+}
+
+.form .fa-search {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: #9ca3af
+}
+
+.form span {
+    position: absolute;
+    right: 17px;
+    top: 13px;
+    padding: 2px;
+    border-left: 1px solid #d1d5db
+}
+
+.left-pan {
+    padding-left: 7px
+}
+
+.left-pan i {
+    padding-left: 10px
+}
+
+.form-input {
+    height: 55px;
+    text-indent: 33px;
+    border-radius: 10px
+}
+
+.modal {
+    display:    none;
+    position:   fixed;
+    z-index:    1000;
+    top:        0;
+    left:       0;
+    height:     100%;
+    width:      100%;
+    background: rgba( 255, 255, 255, .6 )
+    url('loader.gif')
+    50% 50%
+    no-repeat;
+}
+
+body.loading .modal {
+    display: block;
+}

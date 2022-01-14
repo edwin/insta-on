@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="check your instagram follower">
+        <meta name="author" content="github.com/edwin">
+
+        <title>Instagram Follower Analysis</title>
+
+        <!-- Bootstrap core CSS -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/css/bootstrap.min.css"
+              integrity="sha512-T584yQ/tdRR5QwOpfvDfVQUidzfgc2339Lc8uBDtcp/wYu80d7jwBgAxbyMh0a9YM9F8N3tdErpFI8iaGx6x5g=="
+              crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+        <!-- Custom styles for this template -->
+        <link href="homepage.css" rel="stylesheet">
+
+        <!-- icon -->
+        <link rel="shortcut icon" href="favicon.ico"
+              type="image/x-icon"/>
+
+    </head>
+
+    <body>
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top transparent-bar">
+            <div class="container">
+                <a class="navbar-brand" href="/">Instagram Friend Analyzer</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
+                        aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Content -->
+        <div class="container">
+            <div class="row height d-flex justify-content-center align-items-center">
+                <div class="col-md-6">
+                    <div class="form"> <i class="fa fa-search"></i> <input type="text" class="form-control form-input" placeholder="Search Instagram Username" id="form-input-data">  </div>
+                </div>
+            </div>
+
+            <div class="alert alert-secondary alert-dismissible fade show col-md-12" role="alert" style="margin-top: -100px;">
+                Maximum limit of search is <strong>1000</strong> followers/following, and please make sure that the account you are searching for is <strong>not</strong> private.
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="container" id="form-result-data" style="padding-bottom: 100px;">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <table class="table " style="background: #ffffff">
+                        <thead>
+                        <tr>
+                            <td scope="col">
+                                <strong id="full_name_span"></strong> <br>
+                                <span id="biography_span"></span>
+                            </td>
+                            <td scope="col">
+                                Following : <span id="following_span"></span>
+                            </td>
+                            <td scope="col">
+                                Followers : <span id="followers_span"></span>
+                            </td>
+                            <td scope="col">
+                                Total Account you follow, and follows you back : <span id="folback_span"></span>
+                            </td>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+
+                <div class="col-md-6">
+                    <table class="table " style="background: #ffffff">
+                        <thead>
+                        <tr>
+                            <td scope="col" colspan="2">You are following them, but they are not following you back</td>
+                        </tr>
+                        </thead>
+                        <tbody id="form-result-data-following">
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="col-md-6">
+                    <table class="table " style="background: #ffffff">
+                        <thead>
+                        <tr>
+                            <td scope="col" colspan="2">They are following you, but you are not following them back</td>
+                        </tr>
+                        </thead>
+                        <tbody id="form-result-data-followers">
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Loader -->
+        <div class="modal"></div>
+
+        <!-- Footer -->
+        <footer class="py-3 fixed-bottom transparent-bar">
+            <div class="container">
+                <p class="m-0 text-center text-white">Made with <span style="color: #e25555;">&#9829;</span> on Github</p>
+            </div>
+        </footer>
+
+        <!-- Bootstrap core JavaScript -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+                integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.min.js"
+                integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+
+        $('#form-result-data').hide();
+
+        $('#form-input-data').on('keypress', function (e) {
+            if(e.which == 13)
+            {
+                $.post('/api/inquiry', { 'username': $('#form-input-data').val()}, function(response) {
+
+                    var x = 0;
+
+                    $('#full_name_span').text(response.full_name);
+                    $('#biography_span').text(response.biography);
+                    $('#followers_span').text(response.total_followers);
+                    $('#following_span').text(response.total_following);
+                    $('#folback_span').text(response.total_folback);
+
+                    $("#form-result-data-followers").empty();
+                    $.each(response.followers, function(i, item) {
+                        $("#form-result-data-followers").append('<tr><td scope="col">'+(++x)+'</td><td scope="col">'+item+'</td></tr>');
+                    });
+
+                    x = 0;
+
+                    $("#form-result-data-following").empty();
+                    $.each(response.following, function(i, item) {
+                        $("#form-result-data-following").append('<tr><td scope="col">'+(++x)+'</td><td scope="col">'+item+'</td></tr>');
+                    });
+
+                    $('#form-result-data').fadeIn();
+                });
+            }
+        });
+
+        $(document).on({
+            ajaxStart: function() { $("input").blur(); $("body").addClass("loading");    },
+            ajaxStop: function() { $("body").removeClass("loading"); }
+        });
+    </script>
+    </body>
+
+</html>
