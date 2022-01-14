@@ -70,7 +70,7 @@ public class MainController {
 
         // calculate who you follow and follow you back (i called them "true friends" lol)
         if(!followersTemp.isEmpty()) {
-            // your "true friends" is number of your followers - followers you arent follow back
+            // your "true friends" is number of your followers minus the followers you aren't following back
             int total_folback = ((int)responseMap.get("total_followers")) - followersTemp.size();
             responseMap.put("total_folback", total_folback);
         } else {
