@@ -3,12 +3,18 @@ package com.edw.controller;
 import com.edw.service.InstagramService;
 
 import javax.inject.Inject;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 /**
  * <pre>
@@ -33,7 +39,7 @@ public class MainController {
     @Path("/inquiry")
     @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
     @Produces(MediaType.APPLICATION_JSON)
-    public Map inquiry(@FormParam("username") @NotEmpty @NotNull String username) throws Exception {
+    public Map inquiry(@Valid @NotNull @NotBlank @NotEmpty @Size(min = 5) @Pattern(regexp = "^\\S*$") @FormParam("username")String username) throws Exception {
 
         // response object
         Map responseMap = new HashMap();

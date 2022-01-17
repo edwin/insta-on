@@ -45,7 +45,7 @@
                 <div class="col-md-6">
                     <div class="form"> <i class="fa fa-search"></i> <input type="text" class="form-control form-input" placeholder="Search Instagram Username" id="form-input-data">  </div>
                 </div>
-            </div>
+        </div>
 
             <div class="alert alert-secondary alert-dismissible fade show col-md-12" role="alert">
                 Maximum limit of search is <strong>1000</strong> followers/following, and please make sure that the account you are searching for is <strong>not</strong> private.
@@ -133,7 +133,7 @@
         $('#form-input-data').on('keypress', function (e) {
             if(e.which == 13)
             {
-                $.post('/api/inquiry', { 'username': $('#form-input-data').val()}, function(response) {
+                $.post('/api/inquiry', { 'username': $('#form-input-data').val().trim()}, function(response) {
 
                     var x = 0;
 

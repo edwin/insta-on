@@ -3,7 +3,6 @@ package com.edw.service;
 import com.github.instagram4j.instagram4j.IGClient;
 import com.github.instagram4j.instagram4j.actions.users.UserAction;
 import com.github.instagram4j.instagram4j.models.user.Profile;
-import com.github.instagram4j.instagram4j.responses.accounts.AccountsUserResponse;
 import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.annotation.PostConstruct;
