@@ -34,6 +34,15 @@ Limitation
 ------------
 Im limiting to 1000 following/followers only, since requesting more than that would make Instagram block the API request and start displaying some captcha. 
 
+
+Deployment
+------------
+A demo of how this app works can be seen on below URL,
+```
+https://instagram.redeploy.sh/
+``` 
+
+
 Disclaimer
 ------------
 
